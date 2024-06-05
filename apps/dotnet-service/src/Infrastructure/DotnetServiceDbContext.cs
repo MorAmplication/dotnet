@@ -1,4 +1,5 @@
 using DotnetService.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetService.Infrastructure;
@@ -12,5 +13,5 @@ public class DotnetServiceDbContext : IdentityDbContext<User>
 
     public DbSet<Order> Orders { get; set; }
 
-    public DbSet<User> Users { get; set; }
+    public override DbSet<User> Users { get; set; }
 }

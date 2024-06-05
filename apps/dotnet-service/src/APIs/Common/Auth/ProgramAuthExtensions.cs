@@ -1,5 +1,5 @@
 using DotnetService.Infrastructure;
-using GraphQL;
+using DotnetService.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
@@ -15,7 +15,7 @@ public static class ProgramAuthExtensions
         services
             .AddIdentityApiEndpoints<User>()
             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<MyServiceContext>();
+            .AddEntityFrameworkStores<DotnetServiceDbContext>();
     }
 
     public static void UseApiAuthentication(this WebApplication app)
@@ -35,7 +35,7 @@ public static class ProgramAuthExtensions
             {
                 tag = controllerActionDescriptor.ControllerName;
             }
-            tag = tag ?? api.RelativePath?.Split('/')?.FirstOrDefault()?.ToPascalCase();
+            tag = tag ?? api.RelativePath?.Split('/')?.FirstOrDefault();
             return new[] { tag };
         });
 

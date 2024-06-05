@@ -1,4 +1,5 @@
 using DotnetService.Infrastructure;
+using DotnetService.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -21,15 +22,12 @@ public class SeedDevelopmentData
 
         var user = new User
         {
-            Id = model.Id,
-            CreatedAt = model.CreatedAt,
-            UpdatedAt = model.UpdatedAt,
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Username = model.Username,
-            Email = model.Email,
-            Password = model.Password,
-            Roles = model.Roles,
+            Id = "1",
+            CreatedAt = new DateTime(),
+            UpdatedAt = new DateTime(),
+            Username = "admin",
+            Email = "model.Email",
+            Password = "admin",
         };
 
         if (!context.Users.Any(u => u.UserName == user.UserName))
