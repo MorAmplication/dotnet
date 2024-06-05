@@ -1,5 +1,6 @@
 using System.Reflection;
 using DotnetService;
+using DotnetService.APIs;
 using DotnetService.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ builder.Services.RegisterServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
+    options.UseOpenApiAuthentication();
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
@@ -31,6 +33,7 @@ builder.Services.AddCors(builder =>
         }
     );
 });
+builder.Services.AddApiAuthentication();
 builder.Services.AddDbContext<DotnetServiceDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -57,4 +60,15 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await RolesManager.SyncRoles(services, app.Configuration);
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedDevelopmentData.SeedDevUser(services, app.Configuration);
+}
 app.Run();
