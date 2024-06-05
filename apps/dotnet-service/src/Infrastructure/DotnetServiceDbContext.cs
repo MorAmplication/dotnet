@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotnetService.Infrastructure;
 
-public class DotnetServiceDbContext : DbContext
+public class DotnetServiceDbContext : IdentityDbContext<User>
 {
     public DotnetServiceDbContext(DbContextOptions<DotnetServiceDbContext> options)
         : base(options) { }
@@ -11,4 +11,6 @@ public class DotnetServiceDbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
 
     public DbSet<Order> Orders { get; set; }
+
+    public DbSet<User> Users { get; set; }
 }
