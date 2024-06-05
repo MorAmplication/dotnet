@@ -1,7 +1,6 @@
 using DotnetService.APIs;
 using DotnetService.APIs.Dtos;
 using DotnetService.APIs.Errors;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetService.APIs;
@@ -21,7 +20,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Create one Customer
     /// </summary>
     [HttpPost()]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult<CustomerDto>> CreateCustomer(CustomerCreateInput input)
     {
         var customer = await _service.CreateCustomer(input);
@@ -33,7 +31,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Connect multiple Orders records to Customer
     /// </summary>
     [HttpPost("{Id}/orders")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult> ConnectOrders(
         [FromRoute()] CustomerIdDto idDto,
         [FromQuery()] OrderIdDto[] ordersId
@@ -55,7 +52,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Disconnect multiple Orders records from Customer
     /// </summary>
     [HttpDelete("{Id}/orders")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult> DisconnectOrders(
         [FromRoute()] CustomerIdDto idDto,
         [FromBody()] OrderIdDto[] ordersId
@@ -77,7 +73,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Find multiple Orders records for Customer
     /// </summary>
     [HttpGet("{Id}/orders")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult<List<OrderDto>>> FindOrders(
         [FromRoute()] CustomerIdDto idDto,
         [FromQuery()] OrderFindMany filter
@@ -97,7 +92,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Update multiple Orders records for Customer
     /// </summary>
     [HttpPatch("{Id}/orders")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult> UpdateOrders(
         [FromRoute()] CustomerIdDto idDto,
         [FromBody()] OrderIdDto[] ordersId
@@ -119,7 +113,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Delete one Customer
     /// </summary>
     [HttpDelete("{Id}")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult> DeleteCustomer([FromRoute()] CustomerIdDto idDto)
     {
         try
@@ -138,7 +131,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Find many Customers
     /// </summary>
     [HttpGet()]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult<List<CustomerDto>>> Customers(
         [FromQuery()] CustomerFindMany filter
     )
@@ -150,7 +142,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Get one Customer
     /// </summary>
     [HttpGet("{Id}")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult<CustomerDto>> Customer([FromRoute()] CustomerIdDto idDto)
     {
         try
@@ -167,7 +158,6 @@ public abstract class CustomersControllerBase : ControllerBase
     /// Update one Customer
     /// </summary>
     [HttpPatch("{Id}")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult> UpdateCustomer(
         [FromRoute()] CustomerIdDto idDto,
         [FromQuery()] CustomerUpdateInput customerUpdateDto

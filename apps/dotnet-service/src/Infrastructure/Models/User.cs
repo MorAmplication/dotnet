@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DotnetService.Infrastructure.Models;
 
 [Table("Users")]
-public class User : IdentityUser
+public class User
 {
     [Key()]
     [Required()]
