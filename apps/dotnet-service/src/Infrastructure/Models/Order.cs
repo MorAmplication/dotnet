@@ -16,7 +16,7 @@ public class Order
     [Required()]
     public DateTime UpdatedAt { get; set; }
 
-    public string CustomerId { get; set; }
+    public string? CustomerId { get; set; }
 
     [ForeignKey(nameof(CustomerId))]
     public Customer? Customer { get; set; } = null;
